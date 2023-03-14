@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-
+import ReactiveButton from 'reactive-button';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -8,6 +8,7 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 function App() {
   const [todo, setTodo] = useState({ description: '', date: '', status: '' });
   const [todos, setTodos] = useState([]);
+  const [state, setState] = useState('idle');
 
   const inputChanged = (event) => {
     setTodo({ ...todo, [event.target.name]: event.target.value });
@@ -44,7 +45,13 @@ function App() {
         value={todo.status}
         onChange={inputChanged}
       />
-      <button onClick={addTodo}>Add</button>
+      <ReactiveButton
+        buttonState={state}
+        idleText="Submit"
+        loadingText="Loading"
+        successText="Done"
+        onClick={addTodo}
+      />
       <div
         className="ag-theme-material"
         style={{ height: 600, width: 600, margin: 'auto' }}
